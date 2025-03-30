@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Form Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 350px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff758c;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff5e77;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form id="myForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+            <div id="nameError" class="error"></div>
+            <br>
+            <label for="enrollment">Enrollment Number:</label>
+            <input type="enrollment" id="enrollment" name="enrollment">
+            <div id="enrollmentError" class="error"></div>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <div id="passwordError" class="error"></div>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let valid = true;
+            
+            const name = document.getElementById("name").value.trim();
+            const enrollment = document.getElementById("enrollment").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const nameError = document.getElementById("nameError");
+            const enrollmentError = document.getElementById("enrollmentError");
+            const passwordError = document.getElementById("passwordError");
+            
+            nameError.textContent = "";
+            enrollmentError.textContent = "";
+            passwordError.textContent = "";
+            
+            if (name === "") {
+                nameError.textContent = "Name is required";
+                valid = false;
+            }
+            
+            if (enrollment === "") {
+                enrollmentError.textContent = "Enrollment Number is required";
+                valid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(enrollment)) {
+                enrollmentError.textContent = "Invalid enrollment format";
+                valid = false;
+            }
+            
+            if (password === "") {
+                passwordError.textContent = "Password is required";
+                valid = false;
+            } else if (password.length < 6) {
+                passwordError.textContent = "Password must be at least 6 characters long";
+                valid = false;
+            }
+            
+            if (valid) {
+                alert("Form submitted successfully!");
+                document.getElementById("myForm").reset();
+            }
+        });
+    </script>
+</body>
+</html>
